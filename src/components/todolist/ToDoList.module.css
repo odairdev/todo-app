@@ -1,0 +1,59 @@
+.container header {
+  margin-top: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  
+}
+
+.todoCreated, .todoDone {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.todoCreated span, .todoDone span {
+  color: var(--gray-200);
+  font-size: 0.75rem;
+  display: block;
+  padding: 2px 8px;
+  background-color: var(--gray-400);
+  border-radius: 8px;
+}
+
+.todoCreated {
+  color: var(--blue);
+}
+
+.todoDone {
+  color: var(--purple);
+}
+
+.todolist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--gray-400);
+}
+
+.noTodos {
+  color: var(--gray-300);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+.noTodos img {
+  height: 56px;
+  width: 56px;
+  margin-bottom: 1rem;
+}
+
+.noTodos strong {
+  display: block;
+  margin-bottom: -1rem;
+}

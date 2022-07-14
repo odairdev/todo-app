@@ -1,0 +1,32 @@
+.toDoBar {
+  display: flex;
+  width: 100%;
+  margin-top: -2rem;
+}
+
+.toDoBar input {
+  width: 100%;
+  border-radius: 8px;
+  padding: 1rem;
+  line-height: 1.6;
+  background-color: var(--gray-500);
+  outline: 0;
+  border: 0;
+  color: var(--gray-100);
+}
+
+.toDoBar input::placeholder {
+  color: var(--gray-300);
+}
+
+.toDoBar button {
+  margin-left: 0.5rem;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 8px;
+  background-color: var(--blue-dark);
+  color: var(--gray-100);
+  font-weight: bold;
+}
