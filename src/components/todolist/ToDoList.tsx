@@ -5,25 +5,33 @@ import { Trash } from "phosphor-react";
 import check from '../../assets/check.svg'
 
 interface ToDoListProps {
-  todosList?: Array<{
+  todosList: Array<{
     id: number;
     isDone: boolean;
     content: string
-  }>
+  }>;
+  alterList: (id: number, status: boolean) => void;
 }
 
-export function ToDoList({todosList}: ToDoListProps) {
+export function ToDoList({todosList, alterList}: ToDoListProps) {
+  const todosDone = todosList?.reduce((acc, todo) => {
+    if(todo.isDone === true) {
+      acc += 1
+    }
+
+    return acc
+  }, 0)
   
   return (
     <div className={styles.container}>
       <header>
         <div className={styles.todoCreated}>
           <p>Tarefas criadas</p>
-          <span>0</span>
+          <span>{todosList.length}</span>
         </div>
         <div className={styles.todoDone}>
           <p>Concluidas</p>
-          <span>0</span>
+          <span>{todosDone > 0 ? `${todosDone} de ${todosList?.length}` : '0'}</span>
         </div>  
       </header>
       <div className={styles.todolist}>
@@ -38,7 +46,7 @@ export function ToDoList({todosList}: ToDoListProps) {
             {todosList &&
               todosList.map((todo) => (
                 <li key={todo.id}>
-                  <div className={`${styles.todoRadio} ${todo.isDone ? styles.done : ''}`}>
+                  <div className={`${styles.todoRadio} ${todo.isDone ? styles.done : ''}`} onClick={() => alterList(todo.id, !todo.isDone)}>
                     {todo.isDone && (<img src={check}></img>)}
                   </div>
                   <p className={todo.isDone ? styles.isDone : ''} >{todo.content}</p>

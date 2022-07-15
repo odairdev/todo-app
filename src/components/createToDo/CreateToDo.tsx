@@ -3,13 +3,17 @@ import { PlusCircle } from "phosphor-react";
 
 import styles from "./CreateToDo.module.css";
 
-export function CreateToDo() {
+interface CreateToDoProps {
+  createTodo: (newTodo: string) => void;
+}
+
+export function CreateToDo({createTodo}:CreateToDoProps) {
   const [newTodo, setNewTodo] = useState("");
 
   const handleCreateTodo = (e: FormEvent) => {
     e.preventDefault()
 
-    console.log(newTodo)
+    createTodo(newTodo)
   }
 
   return (
