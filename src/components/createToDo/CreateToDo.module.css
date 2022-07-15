@@ -29,4 +29,5 @@
   background-color: var(--blue-dark);
   color: var(--gray-100);
   font-weight: bold;
+  cursor: pointer;
 }
