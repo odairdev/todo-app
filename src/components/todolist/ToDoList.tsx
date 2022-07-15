@@ -11,9 +11,10 @@ interface ToDoListProps {
     content: string
   }>;
   alterList: (id: number, status: boolean) => void;
+  deleteTodo: (id: number) => void;
 }
 
-export function ToDoList({todosList, alterList}: ToDoListProps) {
+export function ToDoList({todosList, alterList, deleteTodo}: ToDoListProps) {
   const todosDone = todosList?.reduce((acc, todo) => {
     if(todo.isDone === true) {
       acc += 1
@@ -50,7 +51,7 @@ export function ToDoList({todosList, alterList}: ToDoListProps) {
                     {todo.isDone && (<img src={check}></img>)}
                   </div>
                   <p className={todo.isDone ? styles.isDone : ''} >{todo.content}</p>
-                  <Trash size={20} />
+                  <Trash size={20} onClick={() => deleteTodo(todo.id)}/>
                 </li>
               ))}
           </ul>

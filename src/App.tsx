@@ -44,12 +44,16 @@ function App() {
     }))
   }
 
+  const deleteTodo = (id: number) => {
+    setTodos(prevState => prevState.filter(todo => todo.id !== id))
+  }
+
   return (
     <div className="App">
       <Header />
       <main className={styles.container}>
         <CreateToDo createTodo={create} />
-        <ToDoList todosList={todos} alterList={alterList}/>
+        <ToDoList todosList={todos} alterList={alterList} deleteTodo={deleteTodo}/>
       </main>
     </div>
   );
