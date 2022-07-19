@@ -3,17 +3,19 @@ import { Eye, EyeSlash } from "phosphor-react";
 
 import styles from "./Signup.module.css";
 import { Link } from "react-router-dom";
+import { useSignup } from "../../hooks/useSignup";
 
 export function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {isPending, error, signup} = useSignup()
 
   const handleSignup = (e: FormEvent) => {
     e.preventDefault()
 
-    console.log(name, email, password)
+    signup(name, email, password)
   }
 
   return (
@@ -52,7 +54,10 @@ export function Signup() {
         </div>
       </label>
 
-      <button type="submit">Cadastrar</button>
+      {!isPending && <button type="submit">Cadastrar</button>}
+      {isPending && <button type="submit" disabled>Carregando...</button>}
+
+      {error && <span>{error}</span>}
 
       <span>
         <a href="/login">

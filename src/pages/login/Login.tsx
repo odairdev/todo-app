@@ -3,16 +3,18 @@ import { Eye, EyeSlash } from "phosphor-react";
 
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
+import { useLogin } from "../../hooks/useLogin";
 
 export function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {login, isPending, error} = useLogin()
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault()
 
-    console.log(name, email, password)
+    login(email, password)
   }
 
   return (
@@ -42,7 +44,8 @@ export function Login() {
         </div>
       </label>
 
-      <button type="submit">Login</button>
+      {!isPending && <button type="submit">Login</button>}
+      {isPending && <button type="submit" disabled>Loading...</button>}
       <span>
         <a href={'/signup'}>
           Criar Conta

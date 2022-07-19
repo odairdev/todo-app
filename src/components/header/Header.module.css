@@ -5,3 +5,44 @@
   align-items: center;
   justify-content: center;
 }
+
+.header nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.header nav ul {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header nav ul a {
+  text-decoration: none;
+  color: var(--purple);
+}
+
+.header nav ul a:hover {
+  text-decoration: underline;
+}
+
+.header button {
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 8px;
+  background-color: var(--blue-dark);
+  border: none;
+  color: var(--gray-100);
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+
+  transition: 0.2s;
+}
+
+.header button:hover {
+  background-color: var(--blue);
+}

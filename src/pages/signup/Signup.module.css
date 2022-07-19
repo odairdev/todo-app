@@ -6,6 +6,7 @@
   border-radius: 8px;
   max-width: 360px;
   color: var(--blue);
+  z-index: 100;
 }
 
 .signup-form label {
