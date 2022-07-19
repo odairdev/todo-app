@@ -1,19 +1,23 @@
-import { createContext, Dispatch, ReactNode, useReducer } from "react";
+import { createContext, Dispatch, ReactNode, useEffect, useReducer } from "react";
 import firebase from 'firebase/app'
+import { auth } from "../firebase/config";
 
 export enum AuthActionKind {
   LOGIN = 'LOGIN',
   LOGOUT = 'LOGOUT',
-  SIGNUP = 'SIGNUP'
+  SIGNUP = 'SIGNUP',
+  AUTH_IS_READY = 'AUTH_IS_READY'
 }
 
 interface AuthContextData {
   user: firebase.User | null | undefined;
+  authIsReady: boolean;
   dispatch: Dispatch<AuthAction>
 }
 
 type AuthState = {
   user: firebase.User | null | undefined;
+  authIsReady: boolean;
 }
 
 interface AuthContextProviderProps {
@@ -33,6 +37,8 @@ const authReducer = (state: AuthState, action: AuthAction) => {
       return {...state, user: action.payload}
     case AuthActionKind.LOGOUT:
       return {...state, user: null}
+    case AuthActionKind.AUTH_IS_READY:
+      return {...state, user: action.payload, authIsReady: true}
     default:
       return state
   }
@@ -41,9 +47,16 @@ const authReducer = (state: AuthState, action: AuthAction) => {
 export const AuthContext = createContext({} as AuthContextData)
 
 export function AuthContextProvider({children}: AuthContextProviderProps) {
-  const [state, dispatch] = useReducer(authReducer, {user: null})
+  const [state, dispatch] = useReducer(authReducer, {user: null, authIsReady: false})
 
-  console.log(state.user)
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged((user) => {
+      dispatch({type: AuthActionKind.AUTH_IS_READY, payload: user})
+      unsub()
+    })
+  }, [])
+
+  console.log('user: ' + state.user)
   
   return (
     <AuthContext.Provider value={{...state, dispatch}}>
