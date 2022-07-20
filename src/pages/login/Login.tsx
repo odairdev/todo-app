@@ -9,13 +9,13 @@ export function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {login, isPending, error} = useLogin()
+  const { login, isPending, error } = useLogin();
 
   const handleLogin = (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    login(email, password)
-  }
+    login(email, password);
+  };
 
   return (
     <form className={styles["login-form"]} onSubmit={handleLogin}>
@@ -45,11 +45,13 @@ export function Login() {
       </label>
 
       {!isPending && <button type="submit">Login</button>}
-      {isPending && <button type="submit" disabled>Loading...</button>}
+      {isPending && (
+        <button type="submit" disabled>
+          Loading...
+        </button>
+      )}
       <span>
-        <a href={'/signup'}>
-          Criar Conta
-        </a>
+        <Link to={"/signup"}>Criar Conta</Link>
       </span>
     </form>
   );

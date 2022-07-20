@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { Eye, EyeSlash } from "phosphor-react";
 
 import styles from "./Signup.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSignup } from "../../hooks/useSignup";
 
 export function Signup() {
@@ -11,11 +11,18 @@ export function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {isPending, error, signup} = useSignup()
+  let navigate = useNavigate()
 
   const handleSignup = (e: FormEvent) => {
     e.preventDefault()
 
-    signup(name, email, password)
+    try {
+      signup(name, email, password)
+
+      navigate('/')
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   return (
@@ -60,9 +67,9 @@ export function Signup() {
       {error && <span>{error}</span>}
 
       <span>
-        <a href="/login">
+        <Link to="/login">
           Já tem uma conta?
-        </a>
+        </Link>
       </span>
     </form>
   );
