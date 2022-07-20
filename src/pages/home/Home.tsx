@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { CreateToDo } from "../../components/createToDo/CreateToDo";
 import { ToDoList } from "../../components/todolist/ToDoList";
+import { useAuth } from "../../hooks/useAuth";
 
 import styles from './Home.module.css'
 
@@ -19,6 +20,7 @@ const initialTodos = [
 ];
 
 export function Home() {
+  const { user } = useAuth()
   const [todos, setTodos] = useState(initialTodos);
 
   const create = (newTodo: string) => {
@@ -49,7 +51,7 @@ export function Home() {
 
   return (
     <main className={styles.home}>
-      <CreateToDo createTodo={create} />
+      <CreateToDo createTodo={create} uid={user?.uid} />
       <ToDoList
         todosList={todos}
         alterList={alterList}

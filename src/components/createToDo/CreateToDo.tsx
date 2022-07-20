@@ -1,32 +1,58 @@
-import { FormEvent, useState } from "react";
-import { PlusCircle } from "phosphor-react";
+import { FormEvent, useEffect, useState } from "react";
+import { PlusCircle, CircleNotch } from "phosphor-react";
 
 import styles from "./CreateToDo.module.css";
+import { useFirestore } from "../../hooks/useFirestore";
 
 interface CreateToDoProps {
-  createTodo: (newTodo: string) => void;
+  createTodo: (todo: string) => void;
+  uid?: string;
 }
 
-export function CreateToDo({createTodo}:CreateToDoProps) {
-  const [newTodo, setNewTodo] = useState("");
+export function CreateToDo({ createTodo, uid }: CreateToDoProps) {
+  const [todo, setTodo] = useState("");
+  const { addDocument, isPending, error, success, document } = useFirestore("todos");
 
-  const handleCreateTodo = (e: FormEvent) => {
-    e.preventDefault()
+  const handleCreateTodo = async (e: FormEvent) => {
+    e.preventDefault();
 
-    createTodo(newTodo)
-  }
+    const doc = {
+      uid,
+      todo,
+      priority: 1,
+    };
+
+    addDocument(doc);
+  };
+
+  useEffect(() => {
+    if (success) {
+      setTodo("");
+    }
+  }, [success]);
 
   return (
     <form className={styles.toDoBar} onSubmit={handleCreateTodo}>
       <input
         type="text"
         placeholder="Adicione uma nova tarefa"
-        onChange={(e) => setNewTodo(e.target.value)}
-        value={newTodo}
+        required
+        onChange={(e) => setTodo(e.target.value)}
+        value={todo}
       />
-      <button type="submit">
-        Criar <PlusCircle size={20} />
-      </button>
+      {!isPending && (
+        <button type="submit">
+          Criar <PlusCircle size={20} />
+        </button>
+      )}
+
+      {isPending && (
+        <button type="submit" disabled className={styles.loading}>
+          <CircleNotch size={24} />
+        </button>
+      )}
+
+      {error && <p>{error}</p>}
     </form>
   );
 }
