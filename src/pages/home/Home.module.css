@@ -3,3 +3,21 @@
   margin: 0 auto;
   min-height: calc(100vh - 200px);
 }
+
+@media (max-width: 736px) {
+  .home {
+    max-width: 500px;
+  }
+}
+
+@media (max-width: 500px) {
+  .home {
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 360px) {
+  .home {
+    max-width: 315px;
+  }
+}

@@ -27,6 +27,12 @@
   text-decoration: underline;
 }
 
+.header ul li span {
+  font-size: 1rem;
+  color: var(--gray-100);
+  margin-right: 0.5rem;
+}
+
 .header button {
   padding: 0.5rem 0.5rem;
   display: flex;
