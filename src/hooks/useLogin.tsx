@@ -5,7 +5,7 @@ import { AuthActionKind } from "../context/AuthContext";
 
 export function useLogin() {
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
   const [isCancelled, setIsCancelled] = useState(false);
   const { dispatch } = useAuth();
 
@@ -22,21 +22,18 @@ export function useLogin() {
 
       dispatch({ type: AuthActionKind.LOGIN, payload: response.user });
 
-      if (!isCancelled) {
-        setIsPending(false);
-        setError(null);
-      }
+      setIsPending(false);
+      setError(null);
     } catch (err: any) {
-      if (!isCancelled) {
-        setIsPending(false);
-        setError(err.message);
+      setIsPending(false);
+      console.log(err)
+      if(err.code === 'auth/wrong-password') {
+        setError('Email ou senha invalidos')
+      } else if(err.code === 'auth/user-not-found') {
+        setError('Email ou senha invalidos')
       }
     }
   };
-
-  useEffect(() => {
-    return () => setIsCancelled(true);
-  }, []);
 
   return { login, isPending, error };
 }

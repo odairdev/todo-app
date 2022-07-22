@@ -4,43 +4,42 @@ import { useAuth } from "./useAuth";
 import { AuthActionKind } from "../context/AuthContext";
 
 export function useSignup() {
-  const [isPending, setIsPending] = useState(false)
-  const [error, setError] = useState(null)
-  const [isCancelled, setIsCancelled] = useState(false)
-  const { dispatch } = useAuth()
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
+  const [isCancelled, setIsCancelled] = useState(false);
+  const { dispatch } = useAuth();
 
   const signup = async (name: string, email: string, password: string) => {
-    setIsPending(true)
+    setIsPending(true);
 
     try {
-      const response = await auth.createUserWithEmailAndPassword(email, password)
+      const response = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
 
-      if(!response) {
-        throw new Error('Could not sign up, server error.')
+      if (!response) {
+        throw new Error("Could not sign up, server error.");
       }
 
       await response.user?.updateProfile({
-        displayName: name
-      })
+        displayName: name,
+      });
 
-      dispatch({type: AuthActionKind.SIGNUP, payload: response.user})
+      dispatch({ type: AuthActionKind.SIGNUP, payload: response.user });
 
-      setIsPending(false)
-      setError(null)
-
-    } catch(err: any) {
-      if(!isCancelled) {
-        setIsPending(false)
-        setError(err.message)
-      }
+      setIsPending(false);
+      setError(null);
+    } catch (err: any) {
+      setIsPending(false);
+      console.log(err)
+      setError(err.message);
     }
-
-  }
+  };
 
   useEffect(() => {
-    return () => setIsCancelled(true)
-  }, [])
+    return () => setIsCancelled(true);
+  }, []);
 
-  return {isPending, error, signup}
-
+  return { isPending, error, signup };
 }

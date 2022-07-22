@@ -11,7 +11,7 @@ interface CreateToDoProps {
 
 export function CreateToDo({ createTodo, uid }: CreateToDoProps) {
   const [todo, setTodo] = useState("");
-  const { addDocument, isPending, error, success, document } = useFirestore("todos");
+  const { addDocument, isPending, error, success } = useFirestore("todos");
 
   const handleCreateTodo = async (e: FormEvent) => {
     e.preventDefault();
@@ -52,7 +52,7 @@ export function CreateToDo({ createTodo, uid }: CreateToDoProps) {
         </button>
       )}
 
-      {error && <p>{error}</p>}
+      {error && <p className="error">{error}</p>}
     </form>
   );
 }

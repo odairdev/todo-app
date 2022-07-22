@@ -44,3 +44,9 @@ body {
 
   font-family: 'Inter', sans-serif;
 }
+
+.error {
+  color: var(--danger);
+  font-size: 0.75rem;
+  margin: 0.25rem 0;
+}
