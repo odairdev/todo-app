@@ -80,6 +80,7 @@
   border: 1px solid var(--gray-400);
   max-width: 736px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .todos li + li {
@@ -93,8 +94,8 @@
 }
 
 .todoRadio {
-  height: 1rem;
-  width: 1rem;
+  height: 16px;
+  width: 16px;
   border-radius: 50%;
   border: 2px solid var(--blue);
   cursor: pointer;
@@ -116,6 +117,31 @@
 .todos li p {
   flex: 1;
   padding-right: 2rem;
+  overflow: hidden;
+}
+
+.todos .priority {
+  position: absolute;
+  max-width: 120px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.25rem;
+  bottom: 0.35rem;
+  left: 3.2rem;
+}
+
+.todos .priority div {
+  width: calc(0.5rem -2px);
+  height: calc(1rem -2px);
+  border-radius: 8px;
+  border: 1px solid var(--gray-300);
+  cursor: pointer;
+}
+
+.todos .priority div.active {
+  border: 2px solid white;
+  height: calc(1rem - 4px);
+  width: calc(0.5rem - 2px);
 }
 
 .todos li svg:hover {

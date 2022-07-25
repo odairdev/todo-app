@@ -2,7 +2,7 @@ import styles from "./ToDoList.module.css";
 import clipboard from "../../assets/clipboard.svg";
 import { Trash } from "phosphor-react";
 
-import check from '../../assets/check.svg'
+import check from "../../assets/check.svg";
 
 interface ToDoListProps {
   todosList: Array<{
@@ -15,23 +15,17 @@ interface ToDoListProps {
   deleteTodo: (id: string) => Promise<void>;
 }
 
-const priorityColors = ['#E25858']
+const priorityColors = ["#262626", "#8cbb0b", "#b91780", "#f38643", "#dc1919"];
 
-export function ToDoList({todosList, alterList, deleteTodo}: ToDoListProps) {
+export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
   const todosDone = todosList?.reduce((acc, todo) => {
-    if(todo.isDone === true) {
-      acc += 1
+    if (todo.isDone === true) {
+      acc += 1;
     }
 
-    return acc
-  }, 0)
+    return acc;
+  }, 0);
 
-  const onTodoDone = (id: string, isDoneNow: boolean) => {
-    const doc = {
-      isDone: !isDoneNow
-    }
-  }
-  
   return (
     <div className={styles.container}>
       <header>
@@ -41,8 +35,11 @@ export function ToDoList({todosList, alterList, deleteTodo}: ToDoListProps) {
         </div>
         <div className={styles.todoDone}>
           <p>Concluidas</p>
-          <span>{todosList && (todosDone > 0 ? `${todosDone} de ${todosList?.length}` : '0')}</span>
-        </div>  
+          <span>
+            {todosList &&
+              (todosDone > 0 ? `${todosDone} de ${todosList?.length}` : `0 de ${todosList?.length}`)}
+          </span>
+        </div>
       </header>
       <div className={styles.todolist}>
         {todosList && todosList?.length === 0 ? (
@@ -55,15 +52,32 @@ export function ToDoList({todosList, alterList, deleteTodo}: ToDoListProps) {
           <ul className={styles.todos}>
             {todosList &&
               todosList.map((todo) => (
-                <li key={todo.id}>
-                  <div className={`${styles.todoRadio} ${todo.isDone ? styles.done : ''}`} onClick={() => alterList(todo.id, {isDone: !todo.isDone})}>
-                    {todo.isDone && (<img src={check}></img>)}
+                <li key={todo.id} style={{background: `linear-gradient(${priorityColors[todo.priority - 1]} 0%, #262626 20px)`}}>
+                  <div
+                    className={`${styles.todoRadio} ${
+                      todo.isDone ? styles.done : ""
+                    }`}
+                    onClick={() => alterList(todo.id, { isDone: !todo.isDone })}
+                  >
+                    {todo.isDone && <img src={check}></img>}
                   </div>
-                  <p className={todo.isDone ? styles.isDone : ''} >{todo.content}</p>
+                  <p className={todo.isDone ? styles.isDone : ""}>
+                    {todo.content}
+                  </p>
                   <div className={styles.priority}>
-
+                    {priorityColors.map((priority, index) => (
+                      <div
+                        style={{ backgroundColor: `${priority}` }}
+                        className={
+                          index === todo.priority - 1 ? styles.active : ""
+                        }
+                        onClick={() =>
+                          alterList(todo.id, { priority: index + 1 })
+                        }
+                      ></div>
+                    ))}
                   </div>
-                  <Trash size={20} onClick={() => deleteTodo(todo.id)}/>
+                  <Trash size={20} onClick={() => deleteTodo(todo.id)} />
                 </li>
               ))}
           </ul>
