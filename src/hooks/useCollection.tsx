@@ -15,6 +15,10 @@ export function useCollection(collection: string, _query: Array<string | undefin
       ref = ref.where(...query)
     }
 
+    if(orderBy) {
+      ref = ref.orderBy(...orderBy)
+    }
+
     const unsubscribe = ref.onSnapshot((snapshot: any) => {
       let results: any = []
 

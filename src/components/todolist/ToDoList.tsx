@@ -67,6 +67,7 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
                   <div className={styles.priority}>
                     {priorityColors.map((priority, index) => (
                       <div
+                        key={priority}
                         style={{ backgroundColor: `${priority}` }}
                         className={
                           index === todo.priority - 1 ? styles.active : ""

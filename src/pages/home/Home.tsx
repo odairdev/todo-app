@@ -18,12 +18,16 @@ export function Home() {
 
   return (
     <main className={styles.home}>
-      <CreateToDo uid={user?.uid} />
-      <ToDoList
-        todosList={documents}
-        alterList={updateDocument}
-        deleteTodo={deleteDocument}
-      />
+      {documents && (
+        <CreateToDo uid={user?.uid} listLength={documents.length} />
+      )}
+      {documents && (
+        <ToDoList
+          todosList={documents}
+          alterList={updateDocument}
+          deleteTodo={deleteDocument}
+        />
+      )}
     </main>
   );
 }
