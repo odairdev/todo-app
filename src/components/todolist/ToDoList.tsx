@@ -5,10 +5,12 @@ import { priorityColors } from "../../utils/filter";
 
 import check from "../../assets/check.svg";
 import { TodoFilter } from "../todoFilter/TodoFilter";
+import { useEffect, useState } from "react";
 
 interface ToDoListProps {
   todosList: Array<{
     id: string;
+    createdAt: Date;
     content: string;
     isDone: boolean;
     priority: number;
@@ -25,6 +27,23 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
 
     return acc;
   }, 0);
+  const [filters, setFilters] = useState({new: true, old: false, isDone: false, priority: -1})
+  const [filteredList, setFilteredList] = useState(todosList)
+
+  const onTodoIsDone = (id: string, todoIsDone: Object) => {
+    alterList(id, todoIsDone)
+    setFilteredList(todosList)
+  }
+
+  useEffect(() => {
+    if(filters.priority !== -1) {
+      setFilteredList(todosList.filter(todo => todo.priority === filters.priority + 1))
+    } else if(filters.isDone) {
+      setFilteredList(filteredList.filter(todo => todo.isDone === true))
+    } else {
+      setFilteredList(todosList)
+    }
+  }, [filters, todosList])
 
   return (
     <div className={styles.container}>
@@ -41,7 +60,7 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
           </span>
         </div>
       </header>
-      <TodoFilter />
+      <TodoFilter filters={filters} changeFilter={setFilters} />
       <div className={styles.todolist}>
         {todosList && todosList?.length === 0 ? (
           <div className={styles.noTodos}>
@@ -52,13 +71,13 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
         ) : (
           <ul className={styles.todos}>
             {todosList &&
-              todosList.map((todo) => (
+              filteredList.map((todo) => (
                 <li key={todo.id} style={{background: `linear-gradient(${priorityColors[todo.priority - 1]} 0%, #262626 20px)`}}>
                   <div
                     className={`${styles.todoRadio} ${
                       todo.isDone ? styles.done : ""
                     }`}
-                    onClick={() => alterList(todo.id, { isDone: !todo.isDone })}
+                    onClick={() => onTodoIsDone(todo.id, { isDone: !todo.isDone })}
                   >
                     {todo.isDone && <img src={check}></img>}
                   </div>

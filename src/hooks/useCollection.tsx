@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { firestore } from "../firebase/config";
-import firebase from 'firebase/app'
+
+export interface CollectionState {
+  content: string;
+  createdAt: Date;
+  isDone: boolean;
+  priority: number;
+  uid: string;
+  id: string;
+}
 
 export function useCollection(collection: string, _query: Array<string | undefined> | null, _orderby: Array<string> | null) {
-  const [documents, setDocuments] = useState<any>(null)
+  const [documents, setDocuments] = useState<Array<CollectionState> | null>(null)
   const [error, setError] = useState<string | null>(null)
   const query = useRef(_query).current
   const orderBy = useRef(_orderby).current

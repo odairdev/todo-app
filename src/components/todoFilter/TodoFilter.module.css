@@ -9,29 +9,45 @@
   background-color: var(--gray-500);
   padding: 0.5rem;
   border-radius: 8px;
+  cursor: pointer;
 }
 
 .todoFilter span + span {
   margin-left: 6px;
 }
 
+.todoFilter span.active,
+.todoFilter div.active  {
+  background-color: var(--blue-dark);
+}
+
+.priorityContainer {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  background-color: var(--gray-500);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
 .todoFilter .priority {
   max-width: 120px;
+  margin-left: 6px;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 0.25rem;
 }
 
 .todoFilter .priority div {
-  width: calc(0.5rem -2px);
-  height: calc(1rem -2px);
+  width: 0.5rem;
+  height: 0.75rem;
   border-radius: 8px;
   border: 1px solid var(--gray-300);
   cursor: pointer;
 }
 
 .todoFilter .priority div.active {
-  border: 2px solid white;
-  height: calc(1rem - 4px);
+  border: 2px solid #fff;
+  height: calc(0.75rem - 2px);
   width: calc(0.5rem - 2px);
 }

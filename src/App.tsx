@@ -4,6 +4,7 @@ import { Home } from "./pages/home/Home";
 import { Signup } from "./pages/signup/Signup";
 import { Login } from "./pages/login/Login";
 import { useAuth } from "./hooks/useAuth";
+import { TodoContextProvider } from "./context/TodoContext";
 
 function App() {
   const { authIsReady, user } = useAuth();
@@ -17,7 +18,15 @@ function App() {
             <Routes>
               <Route
                 path={"/"}
-                element={user ? <Home /> : <Navigate replace to={"/login"} />}
+                element={
+                  user ? (
+                    <TodoContextProvider>
+                      <Home />
+                    </TodoContextProvider>
+                  ) : (
+                    <Navigate replace to={"/login"} />
+                  )
+                }
               />
               <Route
                 path={"/signup"}
