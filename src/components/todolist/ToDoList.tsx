@@ -1,8 +1,10 @@
 import styles from "./ToDoList.module.css";
 import clipboard from "../../assets/clipboard.svg";
 import { Trash } from "phosphor-react";
+import { priorityColors } from "../../utils/filter";
 
 import check from "../../assets/check.svg";
+import { TodoFilter } from "../todoFilter/TodoFilter";
 
 interface ToDoListProps {
   todosList: Array<{
@@ -14,8 +16,6 @@ interface ToDoListProps {
   alterList: (id: string, doc: Object) => Promise<void>;
   deleteTodo: (id: string) => Promise<void>;
 }
-
-const priorityColors = ["#262626", "#8cbb0b", "#b91780", "#f38643", "#dc1919"];
 
 export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
   const todosDone = todosList?.reduce((acc, todo) => {
@@ -41,6 +41,7 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
           </span>
         </div>
       </header>
+      <TodoFilter />
       <div className={styles.todolist}>
         {todosList && todosList?.length === 0 ? (
           <div className={styles.noTodos}>

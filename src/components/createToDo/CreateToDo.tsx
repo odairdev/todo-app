@@ -1,5 +1,6 @@
 import { FormEvent, useEffect, useState } from "react";
 import { PlusCircle, CircleNotch } from "phosphor-react";
+import { characterLimit, todosMaxLimit} from '../../utils/filter'
 
 import styles from "./CreateToDo.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
@@ -8,9 +9,6 @@ interface CreateToDoProps {
   uid?: string;
   listLength?: number | null;
 }
-
-const characterLimit = 180;
-const todosMaxLimit = 10
 
 export function CreateToDo({ uid, listLength }: CreateToDoProps) {
   const [todo, setTodo] = useState("");

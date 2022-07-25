@@ -1,0 +1,37 @@
+.todoFilter {
+  color: var(--gray-100);
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.todoFilter span {
+  display: inline-block;
+  background-color: var(--gray-500);
+  padding: 0.5rem;
+  border-radius: 8px;
+}
+
+.todoFilter span + span {
+  margin-left: 6px;
+}
+
+.todoFilter .priority {
+  max-width: 120px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.25rem;
+}
+
+.todoFilter .priority div {
+  width: calc(0.5rem -2px);
+  height: calc(1rem -2px);
+  border-radius: 8px;
+  border: 1px solid var(--gray-300);
+  cursor: pointer;
+}
+
+.todoFilter .priority div.active {
+  border: 2px solid white;
+  height: calc(1rem - 4px);
+  width: calc(0.5rem - 2px);
+}

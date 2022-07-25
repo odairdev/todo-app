@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CreateToDo } from "../../components/createToDo/CreateToDo";
+import { TodoFilter } from "../../components/todoFilter/TodoFilter";
 import { ToDoList } from "../../components/todolist/ToDoList";
 import { useAuth } from "../../hooks/useAuth";
 import { useCollection } from "../../hooks/useCollection";
@@ -19,14 +20,14 @@ export function Home() {
   return (
     <main className={styles.home}>
       {documents && (
-        <CreateToDo uid={user?.uid} listLength={documents.length} />
-      )}
-      {documents && (
-        <ToDoList
-          todosList={documents}
-          alterList={updateDocument}
-          deleteTodo={deleteDocument}
-        />
+        <>
+          <CreateToDo uid={user?.uid} listLength={documents.length} />
+          <ToDoList
+            todosList={documents}
+            alterList={updateDocument}
+            deleteTodo={deleteDocument}
+          />
+        </>
       )}
     </main>
   );
