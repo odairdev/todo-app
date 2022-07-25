@@ -71,6 +71,14 @@ export function useFirestore(collection: string) {
     }
   }
 
+  const updateDocument = async (id: string, doc: Object) => {
+    dispatch({type: FirestoreActionKind.IS_PENDING, payload: null})
+
+    await ref.doc(id).update({...doc})
+
+    dispatch({type: FirestoreActionKind.DELETED_DOCUMENT, payload: null})
+  }
+
   const deleteDocument = async (id: string) => {
     dispatch({type: FirestoreActionKind.IS_PENDING, payload: null})
 
@@ -83,5 +91,5 @@ export function useFirestore(collection: string) {
     return () => {setIsCancelled(true)}
   }, [])
 
-  return {...state, addDocument, deleteDocument}
+  return {...state, addDocument, updateDocument, deleteDocument}
 }

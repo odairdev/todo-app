@@ -6,13 +6,16 @@ import check from '../../assets/check.svg'
 
 interface ToDoListProps {
   todosList: Array<{
-    id: number;
+    id: string;
+    content: string;
     isDone: boolean;
-    content: string
+    priority: number;
   }>;
-  alterList: (id: number, status: boolean) => void;
-  deleteTodo: (id: number) => void;
+  alterList: (id: string, doc: Object) => Promise<void>;
+  deleteTodo: (id: string) => Promise<void>;
 }
+
+const priorityColors = ['#E25858']
 
 export function ToDoList({todosList, alterList, deleteTodo}: ToDoListProps) {
   const todosDone = todosList?.reduce((acc, todo) => {
@@ -22,21 +25,27 @@ export function ToDoList({todosList, alterList, deleteTodo}: ToDoListProps) {
 
     return acc
   }, 0)
+
+  const onTodoDone = (id: string, isDoneNow: boolean) => {
+    const doc = {
+      isDone: !isDoneNow
+    }
+  }
   
   return (
     <div className={styles.container}>
       <header>
         <div className={styles.todoCreated}>
           <p>Tarefas criadas</p>
-          <span>{todosList.length}</span>
+          <span>{todosList && todosList.length}</span>
         </div>
         <div className={styles.todoDone}>
           <p>Concluidas</p>
-          <span>{todosDone > 0 ? `${todosDone} de ${todosList?.length}` : '0'}</span>
+          <span>{todosList && (todosDone > 0 ? `${todosDone} de ${todosList?.length}` : '0')}</span>
         </div>  
       </header>
       <div className={styles.todolist}>
-        {todosList?.length === 0 ? (
+        {todosList && todosList?.length === 0 ? (
           <div className={styles.noTodos}>
             <img src={clipboard} alt="Clipboard image" />
             <strong>Você ainda não tem tarefas cadastradas</strong>
@@ -47,10 +56,13 @@ export function ToDoList({todosList, alterList, deleteTodo}: ToDoListProps) {
             {todosList &&
               todosList.map((todo) => (
                 <li key={todo.id}>
-                  <div className={`${styles.todoRadio} ${todo.isDone ? styles.done : ''}`} onClick={() => alterList(todo.id, !todo.isDone)}>
+                  <div className={`${styles.todoRadio} ${todo.isDone ? styles.done : ''}`} onClick={() => alterList(todo.id, {isDone: !todo.isDone})}>
                     {todo.isDone && (<img src={check}></img>)}
                   </div>
                   <p className={todo.isDone ? styles.isDone : ''} >{todo.content}</p>
+                  <div className={styles.priority}>
+
+                  </div>
                   <Trash size={20} onClick={() => deleteTodo(todo.id)}/>
                 </li>
               ))}

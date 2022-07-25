@@ -5,11 +5,10 @@ import styles from "./CreateToDo.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
 
 interface CreateToDoProps {
-  createTodo: (todo: string) => void;
   uid?: string;
 }
 
-export function CreateToDo({ createTodo, uid }: CreateToDoProps) {
+export function CreateToDo({ uid }: CreateToDoProps) {
   const [todo, setTodo] = useState("");
   const { addDocument, isPending, error, success } = useFirestore("todos");
 
@@ -18,7 +17,8 @@ export function CreateToDo({ createTodo, uid }: CreateToDoProps) {
 
     const doc = {
       uid,
-      todo,
+      content: todo,
+      isDone: false,
       priority: 1,
     };
 
