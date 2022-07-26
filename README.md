@@ -48,6 +48,8 @@ $ cp .env.local.example .env.local
 $ npm run dev
 ```
 
+App is deployed [here](https://todoapp-930da.web.app/) if you want to check.
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
