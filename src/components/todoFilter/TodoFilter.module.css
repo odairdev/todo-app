@@ -30,6 +30,14 @@
   border-radius: 8px;
 }
 
+@media (max-width: 500px) {
+  .priorityContainer {
+    display: flex;
+    max-width: 130px;
+    margin: 0.5rem 0 0 0;
+  }
+}
+
 .todoFilter .priority {
   max-width: 120px;
   margin-left: 6px;
@@ -51,3 +59,4 @@
   height: calc(0.75rem - 2px);
   width: calc(0.5rem - 2px);
 }
+
