@@ -1,6 +1,8 @@
 import { useEffect, useReducer, useState } from "react";
 import firebase from 'firebase/app'
 import { firestore, timestamp } from "../firebase/config";
+import { useTodo } from "./useTodo";
+import { TodoActionKind } from "../context/TodoContext";
 
 enum FirestoreActionKind {
   IS_PENDING = 'IS_PENDING',
@@ -47,13 +49,6 @@ export function useFirestore(collection: string) {
   const [isCancelled, setIsCancelled] = useState(false)
   const [state, dispatch] = useReducer(firestoreReducer, initialState)
   let ref = firestore.collection(collection)
-
-  const dispatchIfNotCancelled = (action: FirestoreActionType) => {
-    console.log('cancelled? ' + isCancelled)
-    if(!isCancelled) {
-      dispatch(action)
-    }
-  }
 
   const addDocument = async (doc: Object) => {
     dispatch({type: FirestoreActionKind.IS_PENDING, payload: null})

@@ -6,6 +6,7 @@ import { priorityColors } from "../../utils/filter";
 import check from "../../assets/check.svg";
 import { TodoFilter } from "../todoFilter/TodoFilter";
 import { useEffect, useState } from "react";
+import { useTodo } from "../../hooks/useTodo";
 
 interface ToDoListProps {
   todosList: Array<{
@@ -27,23 +28,11 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
 
     return acc;
   }, 0);
-  const [filters, setFilters] = useState({new: true, old: false, isDone: false, priority: -1})
-  const [filteredList, setFilteredList] = useState(todosList)
+  const { filters } = useTodo()
 
   const onTodoIsDone = (id: string, todoIsDone: Object) => {
     alterList(id, todoIsDone)
-    setFilteredList(todosList)
   }
-
-  useEffect(() => {
-    if(filters.priority !== -1) {
-      setFilteredList(todosList.filter(todo => todo.priority === filters.priority + 1))
-    } else if(filters.isDone) {
-      setFilteredList(filteredList.filter(todo => todo.isDone === true))
-    } else {
-      setFilteredList(todosList)
-    }
-  }, [filters, todosList])
 
   return (
     <div className={styles.container}>
@@ -60,7 +49,7 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
           </span>
         </div>
       </header>
-      <TodoFilter filters={filters} changeFilter={setFilters} />
+      <TodoFilter filters={filters} />
       <div className={styles.todolist}>
         {todosList && todosList?.length === 0 ? (
           <div className={styles.noTodos}>
@@ -71,7 +60,7 @@ export function ToDoList({ todosList, alterList, deleteTodo }: ToDoListProps) {
         ) : (
           <ul className={styles.todos}>
             {todosList &&
-              filteredList.map((todo) => (
+              todosList.map((todo) => (
                 <li key={todo.id} style={{background: `linear-gradient(${priorityColors[todo.priority - 1]} 0%, #262626 20px)`}}>
                   <div
                     className={`${styles.todoRadio} ${

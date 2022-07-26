@@ -50,3 +50,18 @@ body {
   font-size: 0.75rem;
   margin: 0.25rem 0;
 }
+
+.loading {
+  margin: 5rem auto;
+  width: 72px;
+}
+
+.loading svg {
+  animation: spin 0.5s infinite;
+  color: var(--blue);
+}
+
+@keyframes spin {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}

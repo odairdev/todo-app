@@ -1,3 +1,4 @@
+import { CircleNotch } from "phosphor-react";
 import { useState } from "react";
 import { CreateToDo } from "../../components/createToDo/CreateToDo";
 import { TodoFilter } from "../../components/todoFilter/TodoFilter";
@@ -13,11 +14,9 @@ export function Home() {
   const { user } = useAuth();
   const { todos, error, updateDocument, deleteDocument } = useTodo();
 
-  console.log(todos);
-
   return (
       <main className={styles.home}>
-        {!todos && <p>loading...</p>}
+        {!todos && <div className="loading"><CircleNotch size={72} /></div>}
         {todos && (
           <>
             <CreateToDo uid={user?.uid} listLength={todos.length} />

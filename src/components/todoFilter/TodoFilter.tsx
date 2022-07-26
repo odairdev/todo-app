@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { useTodo } from "../../hooks/useTodo";
 import { priorityColors } from "../../utils/filter";
 
 import styles from "./TodoFilter.module.css";
@@ -10,25 +10,17 @@ interface TodoFilterProps {
     isDone: boolean;
     priority: number;
   };
-  changeFilter: Dispatch<
-    SetStateAction<{ new: boolean; old: boolean; isDone: boolean; priority: number }>
-  >;
 }
 
-
-export function TodoFilter({ filters, changeFilter }: TodoFilterProps) {
+export function TodoFilter({ filters }: TodoFilterProps) {
+  const { changeFilter, changeIsDone, changePriority} = useTodo()
 
   return (
     <div className={styles.todoFilter}>
       <span
         className={filters.new ? styles.active : ""}
         onClick={() =>
-          changeFilter({
-            new: !filters.new,
-            old: !filters.old,
-            isDone: filters.isDone,
-            priority: filters.priority
-          })
+          changeFilter()
         }
       >
         Recentes
@@ -36,12 +28,7 @@ export function TodoFilter({ filters, changeFilter }: TodoFilterProps) {
       <span
         className={filters.old ? styles.active : ""}
         onClick={() =>
-          changeFilter({
-            new: !filters.new,
-            old: !filters.old,
-            isDone: filters.isDone,
-            priority: filters.priority
-          })
+          changeFilter()
         }
       >
         Antigas
@@ -49,12 +36,7 @@ export function TodoFilter({ filters, changeFilter }: TodoFilterProps) {
       <span
         className={filters.isDone ? styles.active : ""}
         onClick={() =>
-          changeFilter({
-            new: filters.new,
-            old: filters.old,
-            isDone: !filters.isDone,
-            priority: filters.priority
-          })
+          changeIsDone()
         }
       >
         Concluidas
@@ -68,12 +50,7 @@ export function TodoFilter({ filters, changeFilter }: TodoFilterProps) {
               style={{ backgroundColor: `${priority}` }}
               className={index === filters.priority ? styles.active : ""}
               onClick={() =>
-                changeFilter({
-                  new: filters.new,
-                  old: filters.old,
-                  isDone: filters.isDone,
-                  priority: filters.priority === index ? -1 : index,
-                })
+                changePriority(filters.priority === index ? -1 : index)
               }
             ></div>
           ))}

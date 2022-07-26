@@ -10,14 +10,14 @@ export interface CollectionState {
   id: string;
 }
 
-export function useCollection(collection: string, _query: Array<string | undefined> | null, _orderby: Array<string> | null) {
+export function useCollection(collection: string, _query: Array<string | undefined>, _orderBy: Array<string> | null) {
   const [documents, setDocuments] = useState<Array<CollectionState> | null>(null)
   const [error, setError] = useState<string | null>(null)
   const query = useRef(_query).current
-  const orderBy = useRef(_orderby).current
+  const orderBy = useRef(_orderBy).current
 
   useEffect(() => {
-    let ref= firestore.collection(collection) as any
+    let ref = firestore.collection(collection) as any
 
     if(query) {
       ref = ref.where(...query)

@@ -12,7 +12,7 @@ interface CreateToDoProps {
 
 export function CreateToDo({ uid, listLength }: CreateToDoProps) {
   const [todo, setTodo] = useState("");
-  const { addDocument, isPending, error, success } = useFirestore("todos");
+  const { addDocument, isPending, error: firestoreError, success } = useFirestore("todos");
   const [todoError, setTodoError] = useState<string | null>(null)
 
   const handleCreateTodo = async (e: FormEvent) => {
@@ -46,13 +46,13 @@ export function CreateToDo({ uid, listLength }: CreateToDoProps) {
 
   useEffect(() => {
     if(todo.length >= characterLimit) {
-      setTodoError(`Você criar uma tarefa com no maximo ${characterLimit} caracteres.`)
-    } else if (error) {
-      setTodoError(error)
+      setTodoError(`Você pode criar uma tarefa com no maximo ${characterLimit} caracteres.`)
+    } else if (firestoreError) {
+      setTodoError(firestoreError)
     } else {
       setTodoError(null)
     }
-  }, [todo, error])
+  }, [todo, firestoreError])
 
   return (
     <div>
@@ -78,7 +78,7 @@ export function CreateToDo({ uid, listLength }: CreateToDoProps) {
           </button>
         )}
 
-        {error && <p className="error">{error}</p>}
+        {firestoreError && <p className="error">{firestoreError}</p>}
       </form>
       {todoError && <span className="error" style={{paddingLeft: '0.5rem'}}>{todoError}</span>}
     </div>
