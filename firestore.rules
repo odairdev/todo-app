@@ -1,0 +1,12 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /todos/{document=**} {
+      //only authenticated users can create docs
+      allow create: if request.auth != null;
+
+      //Only users who have the same uid as their data will be able to read or delete docs
+      allow read, update, delete: if request.auth.uid == resource.data.uid;
+    }
+  }
+}

@@ -131,8 +131,8 @@
 }
 
 .todos .priority div {
-  width: calc(0.5rem -2px);
-  height: calc(1rem -2px);
+  width: calc(0.5rem - 2px);
+  height: calc(1rem - 2px);
   border-radius: 8px;
   border: 1px solid var(--gray-300);
   cursor: pointer;
